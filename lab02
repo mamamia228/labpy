@@ -1,0 +1,73 @@
+def make_list(a, b):
+    """делает список чисел от a до b"""
+    if a > b:
+        print("ошибка диапазона")  # если начало больше конца то это ошибка
+        raise ValueError("a не может быть больше b")
+
+    lst = []  # создаем пустой список
+    for i in range(a, b + 1):  # идем по всем числам от a до b
+        lst.append(i)  # добавляем каждое число в список
+    return lst  # отдаем готовый список
+
+
+def guess_number(num, arr, method="binary"):
+    """ищем число в списке разными способами."""
+    tries = 0  # тут считаются попытки
+
+    # проверяем, что метод правильный
+    if method != "linear" and method != "binary":
+        method = "linear"  # если неправильный то делаем линейный
+
+    # лин поиск
+    if method == "linear":
+        for x in arr:  # смотрим каждое число по очереди
+            tries += 1  # увеличиваем количество попыток
+            if x == num:  # если нашли число
+                return x, tries
+        # если перебрали весь список и не нашли
+        raise ValueError("число не найдено")
+
+    # бин поиск
+
+    arr = sorted(arr)  # сортируем список, чтобы поиск работал правильно
+    left = 0           # левая граница
+    right = len(arr) - 1  # правая граница
+
+    while left <= right:  # пока есть что искать
+        mid = (left + right) // 2  # находим середину списка
+        tries += 1  # считаем попытку
+
+        if arr[mid] == num:  # если нашли число
+            return arr[mid], tries
+
+        if arr[mid] < num:  # если число больше середины
+            left = mid + 1  # ищем справа
+        else:
+            right = mid - 1  # иначе ищем слева
+
+    # если цикл закончился значит числа нет
+    raise ValueError("число не найдено")
+
+
+def main():
+    print("введите число:")
+    x = int(input())  # число которое ищем
+
+    print("начало списка:")
+    s = int(input())  # начало диапазона
+
+    print("конец списка:")
+    e = int(input())  # конец диапазона
+
+    mylist = make_list(s, e)  # создаем список
+
+    print("метод? (linear/binary):")
+    m = input()  # читаем способ поиска
+
+    try:
+        result = guess_number(x, mylist, m)  # запускаем поиск
+        print("нашли:", result[0], "попыток:", result[1])  # вывод результата
+    except ValueError:
+        print("не нашли :(")  # если число отсутствует
+
+main()

@@ -10,17 +10,17 @@ def make_list(a, b):
     return lst  # отдаем готовый список
 
 
-def guess_number(num, arr, method="binary"):
+def guess_number(num, mma, method="бинарный"):
     """ищем число в списке разными способами."""
     tries = 0  # тут считаются попытки
 
     # проверяем, что метод правильный
-    if method != "linear" and method != "binary":
-        method = "linear"  # если неправильный то делаем линейный
+    if method != "линейный" and method != "бинарный":
+        method = "линейный"  # если неправильный то делаем линейный
 
     # лин поиск
-    if method == "linear":
-        for x in arr:  # смотрим каждое число по очереди
+    if method == "линейный":
+        for x in mma:  # смотрим каждое число по очереди
             tries += 1  # увеличиваем количество попыток
             if x == num:  # если нашли число
                 return x, tries
@@ -29,18 +29,18 @@ def guess_number(num, arr, method="binary"):
 
     # бин поиск
 
-    arr = sorted(arr)  # сортируем список, чтобы поиск работал правильно
+    mma = sorted(mma)  # сортируем список, чтобы поиск работал правильно
     left = 0           # левая граница
-    right = len(arr) - 1  # правая граница
+    right = len(mma) - 1  # правая граница
 
     while left <= right:  # пока есть что искать
         mid = (left + right) // 2  # находим середину списка
         tries += 1  # считаем попытку
 
-        if arr[mid] == num:  # если нашли число
-            return arr[mid], tries
+        if mma[mid] == num:  # если нашли число
+            return mma[mid], tries
 
-        if arr[mid] < num:  # если число больше середины
+        if mma[mid] < num:  # если число больше середины
             left = mid + 1  # ищем справа
         else:
             right = mid - 1  # иначе ищем слева
@@ -61,7 +61,7 @@ def main():
 
     mylist = make_list(s, e)  # создаем список
 
-    print("метод? (linear/binary):")
+    print("метод? (линейный/бинарный):")
     m = input()  # читаем способ поиска
 
     try:

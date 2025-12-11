@@ -32,7 +32,7 @@ def bad_rec_tree(h, r):
     left_val = r + 1
     right_val = r - 1
 
-    # Формируем подузлы следующего уровня
+    # формируем подузлы следующего уровня
     n["l"] = bad_rec_tree(h - 1, left_val)
     n["r"] = bad_rec_tree(h - 1, right_val)
 
@@ -62,7 +62,7 @@ def bad_iter_tree(h, r):
     while len(st) > 0:
         node, level = st.pop()
 
-        # На нужной высоте новые ветви больше не формируем
+        # на нужной высоте новые ветви больше не формируем
         if level >= h:
             continue
 
@@ -90,7 +90,7 @@ def bad_iter_tree(h, r):
 
 # замер времени выполнения для одной высоты
 def time_for_one(func, h):
-    # Обертка для timeit
+    # обертка для timeit
     def wrapper():
         func(h, ROOT_GLOBAL)
 

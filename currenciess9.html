@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Валюты (CRUD)</h2>
+
+  {% if update_message %}
+    <div class="msg">{{ update_message }}</div>
+  {% endif %}
+
+  <p><a href="/update-currencies">Обновить курсы валют (имитация API)</a></p>
+
+  <h3>Создать валюту</h3>
+  <form method="POST" action="/currency/create">
+    <input name="num_code" placeholder="NumCode (840)" required>
+    <input name="char_code" placeholder="CharCode (USD)" required>
+    <input name="name" placeholder="Название" required>
+    <input name="value" type="number" step="0.0001" placeholder="Курс" required>
+    <input name="nominal" type="number" placeholder="Номинал" required>
+    <button type="submit">Создать</button>
+  </form>
+
+  <hr>
+
+  {% if currencies %}
+    <table>
+      <tr>
+        <th>ID</th><th>Num</th><th>Char</th><th>Name</th><th>Nom</th><th>Value</th><th>Действия</th>
+      </tr>
+      {% for c in currencies %}
+      <tr>
+        <td>{{ c.id }}</td>
+        <form method="POST" action="/currency/update" style="display: contents;">
+          <input type="hidden" name="id" value="{{ c.id }}">
+          <td><input name="num_code" value="{{ c.num_code }}" required size="6"></td>
+          <td><input name="char_code" value="{{ c.char_code }}" required size="6"></td>
+          <td><input name="name" value="{{ c.name }}" required></td>
+          <td><input name="nominal" type="number" value="{{ c.nominal }}" required size="4"></td>
+          <td><input name="value" type="number" step="0.0001" value="{{ "%.4f"|format(c.value) }}" required size="8"></td>
+          <td>
+            <button type="submit">Обновить</button>
+            <a href="/currency/delete?id={{ c.id }}" onclick="return confirm('Удалить {{ c.char_code }}?');">Удалить</a>
+          </td>
+        </form>
+      </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>Валют пока нет.</p>
+  {% endif %}
+{% endblock %}

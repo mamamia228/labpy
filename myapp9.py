@@ -1,6 +1,3 @@
-# myapp.py
-# Главный файл. Здесь роутер, сервер и просто всё связывается.
-# Делал максимально просто, без "красивых" фреймворков.
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, parse_qs
@@ -15,8 +12,6 @@ from utils.currencies_cbapi import get_currencies
 
 
 def parse_post(body_bytes):
-    # очень простой разбор POST формы
-    # data вида a=1&b=2
     text = body_bytes.decode("utf-8")
     qs = parse_qs(text)
     out = {}
@@ -26,7 +21,7 @@ def parse_post(body_bytes):
 
 
 class Handler(BaseHTTPRequestHandler):
-    # "Глобальные" ссылки меню
+    # "глобальные" ссылки меню
     def nav(self):
         return [
             {"href": "/", "caption": "Главная"},
@@ -78,7 +73,7 @@ class Handler(BaseHTTPRequestHandler):
                 return self._redir("/currencies")
 
             if path == "/update-currencies":
-                # имитация "API": получаем новые значения и обновляем
+                # имитация "API" получаем новые значения и обновляем
                 allc = self.currency.list_currencies()
                 codes = [c["char_code"] for c in allc]
                 rates = get_currencies(codes)
@@ -151,7 +146,7 @@ class Handler(BaseHTTPRequestHandler):
 
             if self.path == "/user/create":
                 uid = self.user.create_user(form.get("name", ""))
-                # для простоты: подписываем на первую валюту если есть
+                # для простоты подписываем на первую валюту если есть
                 currs = self.currency.list_currencies()
                 if currs:
                     self.uc.subscribe(uid, currs[0]["id"])

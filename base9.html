@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+
+  <style>
+    body { font-family: Arial; background: #fff; color: #1f2a44; margin: 40px; }
+    h1, h2 { color: #2f5bea; }
+    nav { margin-bottom: 20px; }
+    nav a { margin-right: 15px; color: #e84a8a; font-weight: bold; text-decoration: none; }
+    nav a:hover { text-decoration: underline; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    th, td { border: 1px solid #ccc; padding: 6px; }
+    th { background: #f3f5ff; }
+
+    button { background: #e84a8a; color: white; border: none; padding: 5px 10px; cursor: pointer; }
+    button:hover { background: #d63c7a; }
+
+    .msg { padding: 10px; margin: 10px 0; border-left: 4px solid #2f5bea; background: #e8f0ff; }
+  </style>
+</head>
+<body>
+
+  <h1>{{ myapp }}</h1>
+
+  <nav>
+    {% for item in navigation %}
+      <a href="{{ item.href }}">{{ item.caption }}</a>
+    {% endfor %}
+  </nav>
+
+  {% block content %}{% endblock %}
+
+</body>
+</html>
